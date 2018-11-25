@@ -1,0 +1,54 @@
+<div>
+  <table>
+    <tr>
+      <td>ID</td>
+      <td style="text-align:right">{{order.id}}</td>
+    </tr>
+    <tr>
+      <td>Username</td>
+      <td style="text-align:right">{{order.username}}</td>
+    </tr>
+    <tr>
+      <td>Phone</td>
+      <td style="text-align:right">{{order.phone}}</td>
+    </tr>
+    <tr>
+      <td>Date</td>
+      <td style="text-align:right">{{order.date | date }}</td>
+    </tr>
+    <tr>
+      <td>Address</td>
+      <td style="text-align:right">{{order.address}}</td>
+    </tr>
+    <tr>
+      <td>PayMethod</td>
+      <td style="text-align:right">{{order.paymethod}}</td>
+    </tr>
+    <tr>
+      <td>Total</td>
+      <td style="text-align:right">{{order.total}}</td>
+    </tr>
+  </table>
+  <br />
+  <p>Order Detail</p>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Img</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of order.orderDetailViews">
+        <td>{{product.id}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.price}}</td>
+        <td><img [alt]="product.imgName" width="50" src="http://localhost:58837/upload/{{product.image}}" /></td>
+        <td><button>detail</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

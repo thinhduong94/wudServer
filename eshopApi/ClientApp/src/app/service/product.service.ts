@@ -15,6 +15,12 @@ export class ProductService {
     var data = this.mapdata(product);
     return this.http.post(this.baseUrl + 'api/product', data);
   }
+  edit(id, product) {
+    return this.http.put<any>(this.baseUrl + 'api/product/' + id, this.mapdata(product));
+  }
+  getById(id) {
+    return this.http.get<any>(this.baseUrl + 'api/product/' + id);
+  }
   mapdata(product) {
     return {
       "name": product.name,

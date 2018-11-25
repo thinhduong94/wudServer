@@ -130,7 +130,7 @@ namespace eshopApi.Controllers
             return Ok(list);
         }
         // GET: api/Product/5
-        [HttpGet("GetProductById/{id}", Name = "GetProductById")]
+        [HttpGet("{id}", Name = "GetProductById")]
         public ActionResult Get(int id)
         {
             var _proudct = _context.product.Find(id);
@@ -138,6 +138,8 @@ namespace eshopApi.Controllers
             productView _prod = new productView();
             _prod.id = _proudct.id;
             _prod.name = _proudct.name;
+            _prod.band_id = _proudct.band_id;
+            _prod.category_id = _proudct.category_id;
                 _prod.price = _proudct.price;
                 _prod.imgName = _proudct.imgName;
             _prod.category = _context.category.Where(x => x.id.Equals(_proudct.category_id)).Select(x => new categoryView
@@ -240,8 +242,35 @@ namespace eshopApi.Controllers
 
         // PUT: api/Product/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, producPostView item)
         {
+            var _pro = _context.product.Find(id);
+            _pro.id = id;
+            _pro.name = item.name;
+            _pro.price = item.price;
+            _pro.imgName = item.imgName;
+            _pro.category_id = item.category_id;
+            _pro.band_id = item.band_id;
+            
+            _context.SaveChanges();
+
+            var listChilOld = _context.productChil.Where(x => x.product_id == id).ToList();
+            _context.productChil.RemoveRange(listChilOld);
+            _context.SaveChanges();
+            List<productChil> _proChilList = new List<productChil>();
+            foreach (var i in item.productChilViews)
+            {
+                productChil _proChil = new productChil();
+                _proChil.product_id = _pro.id;
+                _proChil.sizeName = i.sizeName;
+                _proChil.sizeValue = i.sizeValue;
+                _proChil.colorName = i.colorName;
+                _proChil.colorValue = i.colorValue;
+                _proChilList.Add(_proChil);
+            }
+            _context.productChil.AddRange(_proChilList);
+            _context.SaveChanges();
+            return Ok(new { data = _pro });
         }
 
         // DELETE: api/ApiWithActions/5

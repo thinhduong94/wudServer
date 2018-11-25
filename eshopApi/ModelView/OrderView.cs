@@ -7,7 +7,14 @@ namespace eshopApi.ModelView
 {
     public class OrderView
     {
-        
+        public int id { get; set; }
+        public string username { get; set; }
+        public string address { get; set; }
+        public string phone { get; set; }
+        public int paymethod { get; set; }
+        public decimal total { get; set; }
+        public DateTime date { get; set; }
+        public List<OrderDetailView> orderDetailViews { get; set; }
     }
     public class OrderDetaiViewPost
     {
@@ -26,6 +33,10 @@ namespace eshopApi.ModelView
     }
     public class OrderDetailView
     {
-
+        public int id { get; set; }
+        public string name { get; set; }
+        public string image { get; set; }
+        public decimal price { get; set; }
+        public int quantiti { get; set; }
     }
 }

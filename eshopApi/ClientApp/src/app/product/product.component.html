@@ -1,6 +1,72 @@
 <div>
-  <p>The .table-bordered class adds borders to a table:</p>
-  <a [routerLink]='["/create"]'>Create</a>
+  <br />
+  <p>Seach Form</p>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="pwd">Name:</label>
+        <input type="text" class="form-control" [(ngModel)]="searchItem.name" name="name">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="pwd">Price from:</label>
+        <input type="number" min="0" class="form-control" [(ngModel)]="searchItem.priceFrom" name="priceFrom">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="pwd">Price to:</label>
+        <input type="number" min="0" [(ngModel)]="searchItem.priceTo" class="form-control" name="priceTo">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="pwd">Catagory:</label>
+        <select [(ngModel)]="searchItem.category" (change)="getSearch()" name="category" class="form-control">
+          <option *ngFor="let c of cateroies" [value]="c.id">{{c.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="pwd">band:</label>
+        <select [(ngModel)]="searchItem.band" name="band" class="form-control">
+          <option *ngFor="let b of bands" [value]="b.id">{{b.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3" *ngIf="searchItem.category">
+      <div class="form-group">
+        <label for="pwd">Size: </label>
+        <select [(ngModel)]="searchItem.size" name="size" class="form-control">
+          <option *ngFor="let s of size" [value]="s.sizeValue">{{s.sizeName}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3" *ngIf="searchItem.category">
+      <div class="form-group">
+        <label for="pwd">Size: </label>
+        <select [(ngModel)]="searchItem.color" name="color" class="form-control">
+          <option *ngFor="let s of color" [value]="s.colorValue">{{s.colorName}}</option>
+        </select>
+      </div>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <button class="" (click)="search()" >Search</button>
+      <button class="" (click)="clear()" >Clear</button>
+      <a class="btn-succuss" [routerLink]='["/create"]'>Create</a>
+    </div>
+    
+  </div>
+  <br />
+  <p>
+    List product
+  </p>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -27,7 +93,7 @@
           </p>
         </td>
         <td><img [alt]="product.imgName" width="50" src="http://localhost:58837/upload/{{product.imgName}}"/></td>
-        <td><button>Edit</button></td>
+        <td><a routerLink="/product/{{product.id}}">Edit</a></td>
       </tr>
     </tbody>
   </table>

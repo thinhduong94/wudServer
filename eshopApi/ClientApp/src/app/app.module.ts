@@ -15,6 +15,12 @@ import { ProductService } from './service/product.service';
 import { CreateComponent } from './product/create/create.component';
 import { CategoryService } from './service/category.service';
 import { BandService } from './service/band.service';
+import { OrderComponent } from './order/order.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { OrderService } from './service/order.service';
+import { EditProductComponent } from './edit-product/edit-product.component';
+import { SearchService } from './service/search.service';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +31,11 @@ import { BandService } from './service/band.service';
     FetchDataComponent,
     UploadComponent,
     ProductComponent,
-    CreateComponent
+    CreateComponent,
+    OrderComponent,
+    OrderDetailComponent,
+    EditProductComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,10 +47,14 @@ import { BandService } from './service/band.service';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'upload', component: UploadComponent },
       { path: 'product', component: ProductComponent },
-      { path: 'create', component: CreateComponent }
+      { path: 'product/:id', component: EditProductComponent },
+      { path: 'create', component: CreateComponent },
+      { path: 'order', component: OrderComponent },
+      { path: 'order/:id', component: OrderDetailComponent },
+      { path: 'statistics', component: StatisticsComponent }
     ])
   ],
-  providers: [ProductService, CategoryService, BandService],
+  providers: [ProductService, CategoryService, BandService, OrderService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

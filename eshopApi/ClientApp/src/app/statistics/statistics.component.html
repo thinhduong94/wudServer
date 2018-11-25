@@ -1,0 +1,84 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="pwd">Date From:</label>
+        <input type="date" class="form-control" [(ngModel)]="input.dateFrom" name="dateFrom">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="pwd">Date To:</label>
+        <input type="date" class="form-control" [(ngModel)]="input.dateTo" name="dateTo">
+      </div>
+    </div>
+  </div>
+  <p>
+    <button (click)="run()" >Run</button>
+  </p>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Date</th>
+            <th>payMethod</th>
+            <th>Address</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of output.orderSatisticViews">
+            <td>{{order.id}}</td>
+            <td>{{order.username}}</td>
+            <td>{{order.date | date}}</td>
+            <td>{{order.paymethod==0 ? 'ship':'not ship'}}</td>
+            <td>{{order.address}}</td>
+            <td>{{order.total}}</td>
+            <td><a routerLink="/order/{{order.id}}">Detail</a></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="5">Total</th>
+            <th colspan="2">${{output.total}}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>
+        List product
+      </p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Band</th>
+            <th>Img</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of output.productSatisViews">
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.category}}</td>
+            <td>{{product.band}}</td>
+            <td><img [alt]="product.img" width="50" src="http://localhost:58837/upload/{{product.img}}" /></td>
+            <td>{{product.total}}</td>
+            <td><a routerLink="/product/{{product.id}}">Edit</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
