@@ -14,5 +14,6 @@ namespace eshopApi.Model
         public decimal total { get; set; }
         public int paymethod { get; set; }
         public DateTime paydate { get; set; }
+        public int? benefit { get; set; }
     }
 }

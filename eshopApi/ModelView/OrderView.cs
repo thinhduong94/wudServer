@@ -12,6 +12,7 @@ namespace eshopApi.ModelView
         public string address { get; set; }
         public string phone { get; set; }
         public int paymethod { get; set; }
+        public int? benefit { get; set; }
         public decimal total { get; set; }
         public DateTime date { get; set; }
         public List<OrderDetailView> orderDetailViews { get; set; }

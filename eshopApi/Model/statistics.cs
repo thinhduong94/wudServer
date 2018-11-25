@@ -18,6 +18,7 @@ namespace eshopApi.Model
         public string username { get; set; }
         public string address { get; set; }
         public int paymethod { get; set; }
+        public int? benefit { get; set; }
         public decimal total { get; set; }
     }
     public class productSatisView

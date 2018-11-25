@@ -11,5 +11,7 @@ namespace eshopApi.Model
         public string name { get; set; }
         public int value { get; set; }
         public int rode_id { get; set; }
+        public DateTime dateForm { get; set; }
+        public DateTime dateTo { get; set; }
     }
 }

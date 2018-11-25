@@ -34,6 +34,7 @@ namespace eshopApi.Controllers
                              paymethod = o.paymethod,
                              phone = o.phone,
                              total = o.total,
+                             benefit = o.benefit ,
                              orderDetailViews = (from d in _context.orderDetail
                                                  join p in _context.product on d.product_id equals p.id
                                                  where d.order_id == o.id
@@ -51,11 +52,14 @@ namespace eshopApi.Controllers
         [HttpGet("getBenefit/{id}",Name = "getBenefit")]
         public ActionResult getBenefit(string id)
         {
+            DateTime now = DateTime.Now;
             var benefit = (from u in _context.account
                            join r in _context.role on u.role_id equals r.id
                            join b in _context.benefit on r.id equals b.rode_id
                            where u.username.Equals(id)
-                           select b).FirstOrDefault();
+                           && (b.dateForm == null || b.dateForm <= now)
+                           && (b.dateTo == null || b.dateTo >= now)
+                           select b).ToList();
             return Ok(benefit);
         }
         // GET: api/Order/5
@@ -72,6 +76,7 @@ namespace eshopApi.Controllers
                              date = o.paydate,
                              paymethod = o.paymethod,
                              phone = o.phone,
+                             benefit = o.benefit,
                              total = o.total,
                              orderDetailViews = (from d in _context.orderDetail
                                                  join p in _context.product on d.product_id equals p.id
@@ -99,6 +104,7 @@ namespace eshopApi.Controllers
                          {
                              id = o.id,
                              date = o.paydate,
+                             benefit =o.benefit,
                              username = o.username,
                              address = o.address,
                              paymethod = o.paymethod,
@@ -149,13 +155,14 @@ namespace eshopApi.Controllers
         [HttpPost]
         public ActionResult Post(OrderViewPost item)
         {
+            DateTime now = DateTime.Now;
             Order order = new Order();
             order.address = item.address;
             order.phone = item.phone;
             order.username = item.username;
             order.paymethod = item.paymethod;
             order.total = 0;
-            decimal valueBenefit = 0;
+            int valueBenefit = 0;
             var user = _context.account.Where(x => x.username == item.username).FirstOrDefault();
             if (user != null)
             {
@@ -163,12 +170,18 @@ namespace eshopApi.Controllers
                                join r in _context.role on u.role_id equals r.id
                                join b in _context.benefit on r.id equals b.rode_id
                                where u.username.Equals(item.username)
-                               select b).FirstOrDefault();
+                               && (b.dateForm == null || b.dateForm <= now)
+                               && (b.dateTo == null || b.dateTo >= now)
+                               select b).ToList();
                 if(benefit != null)
                 {
-                    valueBenefit = benefit.value;
+                    foreach(var b in benefit)
+                    {
+                        valueBenefit += b.value;
+                    }
                 }
             }
+           
             foreach (var de in item.detail)
             {
                 var pro = _context.product.Find(de.product_id);
@@ -177,8 +190,10 @@ namespace eshopApi.Controllers
                     order.total += (de.quatity * pro.price);      
                 }
             }
+            
             order.total = order.total - (order.total * valueBenefit)/100;
             order.paydate = DateTime.Now;
+            order.benefit = valueBenefit;
             _context.Order.Add(order);
             _context.SaveChanges();
             List<orderDetail> detailList = new List<orderDetail>();

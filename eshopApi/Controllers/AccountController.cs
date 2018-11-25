@@ -38,8 +38,8 @@ namespace eshopApi.Controllers
         public ActionResult login(loginView value)
         {
             var model = _context.account.Where(x => x.username.Equals(value.username) && x.password.Equals(value.password)).FirstOrDefault();
-
-            if(model != null)
+            DateTime now = DateTime.Now;
+            if (model != null)
             {
                 var data = (from a in _context.account
                             join r in _context.role on a.role_id equals r.id
@@ -55,6 +55,8 @@ namespace eshopApi.Controllers
                                     name = r.name,
                                     benefits = (from b in _context.benefit
                                                 where b.rode_id == r.id
+                                                && (b.dateForm == null || b.dateForm <= now)
+                                                && (b.dateTo == null || b.dateTo >= now)
                                                 select new benefitView
                                                 {
                                                     id = b.id,

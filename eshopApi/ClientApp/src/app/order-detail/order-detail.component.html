@@ -22,7 +22,11 @@
     </tr>
     <tr>
       <td>PayMethod</td>
-      <td style="text-align:right">{{order.paymethod}}</td>
+      <td style="text-align:right">{{order.paymethod ==0 ? 'ship' :'not ship'}}</td>
+    </tr>
+    <tr>
+      <td>Benefit</td>
+      <td style="text-align:right">{{order.benefit}}</td>
     </tr>
     <tr>
       <td>Total</td>

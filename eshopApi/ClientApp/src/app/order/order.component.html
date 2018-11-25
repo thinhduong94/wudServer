@@ -10,6 +10,7 @@
         <th>Date</th>
         <th>payMethod</th>
         <th>Address</th>
+        <th>Benefit</th>
         <th>Total</th>
         <th></th>
       </tr>
@@ -21,6 +22,7 @@
         <td>{{order.date | date}}</td>
         <td>{{order.paymethod==0 ? 'ship':'not ship'}}</td>
         <td>{{order.address}}</td>
+        <td>{{order.benefit}}</td>
         <td>{{order.total}}</td>
         <td><a routerLink="/order/{{order.id}}">Detail</a></td>
       </tr>
